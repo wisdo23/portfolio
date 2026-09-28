@@ -118,16 +118,12 @@ function App() {
       .then((data) => {
         if (active) setPortfolio(data);
       })
-      .catch(() => {
-        if (active) setLoadError("Projects could not be loaded from PostgreSQL.");
-      });
+      .catch(() => {});
     api("/api/profile")
       .then((data) => {
         if (active) setHasPhoto(data.hasPhoto);
       })
-      .catch(() => {
-        if (active) setLoadError("The profile could not be loaded from PostgreSQL.");
-      });
+      .catch(() => {});
     return () => {
       active = false;
     };
@@ -341,15 +337,11 @@ function App() {
         <section className="mx-auto grid max-w-6xl items-end gap-10 px-6 pb-24 pt-20 lg:grid-cols-[auto_1fr] lg:px-8 lg:pb-32 lg:pt-28">
           <div>
             <div className="h-36 w-36 overflow-hidden border border-line bg-panel">
-              {hasPhoto ? (
-                <img
-                  src={`/api/profile/photo?v=${photoVersion}`}
-                  alt="Wisdom Kudzo"
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <div className="flex h-full items-center justify-center font-serif text-3xl text-brass">WK</div>
-              )}
+              <img
+                src={hasPhoto ? `/api/profile/photo?v=${photoVersion}` : "/portrait.png"}
+                alt="Wisdom Kudzo"
+                className="h-full w-full object-cover"
+              />
             </div>
             <label className="mt-3 block cursor-pointer text-xs uppercase tracking-[0.18em] text-muted hover:text-paper">
               {hasPhoto ? "Edit photo" : "Upload photo"}
